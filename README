@@ -1,0 +1,86 @@
+TEMA 1 IOCLA
+
+In fisierul tema1.c initial am definit structurile pentru lista generica,
+structura de director, structura de fisier si macrourile pentru lungimea 
+inputului, comenzii, numelui si caii. Structura directorului cuprinde nu-
+mele, directorul parinte, lista cu directoarele si fisierele imediat ur-
+matoare lui, directorul de la urmatorul nivel. Structura de fisier cu-
+prinde numele, directorul parinte si urmatorul fisier.
+
+Se creeaza functiile pentru liste generice: alocarea de lista, printare
+de lista, inserare in lista, stergere din lista. De asemenea, se folosesc
+functii pentru alocarea structurilor si campurilor din acestea. Functia 
+erase este folosita pentru stergere.
+
+Functia de dezalocare lista apleaza functia de stergere in acord cu tipul 
+informatiei din lista. Pentru aceasta am implementat doua functii: dez_file
+si dez_dir, care se ocupa cu eliberarea memoriei pentru campuri.
+
+
+Sunt implementate functii auxiliare pentru afisarea numelui directorului
+si fisierului. Acestea sunt folosite in apelul functiei print_list care 
+afiseaza lista generica.
+
+In cadrul functiei insert se trateaza doua cazuri: inserare in lista vida,
+caz in care se schimba capul listei, sau inserare la final de lista nevida,
+varianta in care se parcurge lista pana la final si se insereaza apoi.
+
+Functiile de comparare compare_file si compare_directory sunt folosite pentru
+functia de cautare in lista. Acestea intorc valoarea 0 daca au gasit fisierul/
+directorul si 1 invers. Funcitiile de cautare in director sau fisier (search_
+directory si search_file) returneaza fiserul, respectiv directorul cautat, sau
+NULL in caz contrar.
+
+Functia delete sterge din lista generica. Se trateaza cazul in care se sterge
+din lista primul element, cand se schimba capul listei. Apoi se cauta in lista
+elementul ce trebuie sa fie sters. Daca nu se gaseste fisierul/directorul se 
+afiseaza un mesaj corespunzator.
+
+Functia mkdir creeaza in directorul parinte un director nou cu numele name. 
+Se aloca un nou director, se schimba numele acestuia cu cel cerut si se fac
+legaturile dintre el si parinte, respectiv urmator. Se cauta apoi in lista de 
+directoare si daca se gaseste deja directorul, atunci se afiseaza un mesaj
+sugestiv, altfel se apeleaza inserarea in lista.
+
+Functia touch creeaza in directorul parinte un nou fisier cu numele dat ca 
+parametru. Initial se aloca un nou fisier, apoi se actualizeaza numele si caut
+in directorul parinte daca exita un fisier deja numit astfel, caz in caare se 
+afiseaza mesaj, altfel se apeleaza functia de inserare.
+
+Functia ls apeleaza functia print_list care aplicata atat directoarelor, cat si
+fisierelor pentru a afisa fisierele si directoarele ce se afla in directorul parinte.
+
+Functia rm sterge din directorul parinte fisierul a carui nume este dat ca parametru,
+iar functia rmdir sterge din directorul parinte directorul al carui nume este transmis
+ca parametru functiei.
+
+Functia cd schimba directorul actual cu cel dat ca parametru. Se parcurge mai intai 
+lista de directoare, pana cand se gaseste directorul si se realizeaza schimbarea.
+Daca se doreste mutarea in directorul anterior, atunci se face schimbarea cu directo-
+rul parinte. In cazul in care nu se gaseste directorul, se afiseaza mesaj corespunzator.
+
+Functia pwd intoarce un string care reprezinta calea directorului target. Parcurg mai intai
+prin intermediul parintelui, de jos in sus, drumul pana la directorul home si pastrez in 
+buffer stringul creat. Pe acesta il voi inversa si il voi retine in variabila string, care 
+reprezinta forma corecta a caii catre director.
+
+Functia mv muta fisiere si directoare. Initial se verifica daca exista director sau fisier
+cu noul nume deja creat. Apoi se cauta in lista de directoare directorul cu numele vechi, daca
+directorul cautat este primul atunci se apeleza functia de mutare a primului element, altfel 
+inseamna ca directorul cautat nu este cap de lista si se apeleaza functia mv_dir. 
+Daca se doreste a muta un fisier se verifica daca fisierul cu numele vechi este primul in lista
+si se apeleaza mutarea la inceput, altfel se apeleaza mv_file. 
+Daca fisierul sau directorul cu numele vechi nu este gasit se afiseaza un mesaj corespunzator.
+
+Functia tree afiseaza sub forma arborescenta directoarele si fisierele din directorul curent. 
+Daca directorul este NULL se iese din functia recursiva. In cazul in care nivelul este mai mare 
+decat 0 se afiseaza spatii conform numarului nivelului, apoi se afiseaza numele directorului. Se
+parcurge lista de directoare a directorului si se apeleaza functia tree pentru fiecare. In final 
+se afiseaza lista de fisiere conform nivelului respectiv.
+
+Functia stop elibereaza toata memoria ocupata de directorul pasat ca parametru, prin apelearea 
+functiei dez_dir.
+
+In functia main se aloca variabila line care reprezinta linia citita si directorul home, impreuna
+cu cel curent, care pointeaza la directorul home. Apoi se citesc liniile in continuare si se veri-
+fica tipul comenzii. In functie de comanda citita se apeleaza una din functiile implementate.
